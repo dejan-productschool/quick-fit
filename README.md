@@ -36,7 +36,7 @@ npm run research   # synthesise the interview transcripts into themes + top pain
 npm run eval       # run the safety/quality eval suite
 ```
 
-**Live:** https://quickfit-kappa.vercel.app
+**Live:** https://quick-fit-neon.vercel.app
 
 ## Notes
 

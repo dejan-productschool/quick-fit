@@ -11,7 +11,7 @@
 import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://quickfit-kappa.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://quick-fit-neon.vercel.app";
 
 type Feed = { items: { id: string; request: string; title: string }[]; total: number };
 
