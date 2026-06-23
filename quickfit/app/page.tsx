@@ -50,7 +50,7 @@ function levelFromXp(xp: number): { level: number; title: string; progress: numb
 }
 
 function Confetti() {
-  const colors = ["#eeff00", "#d6e600", "#f5e642", "#f59e0b", "#06b6d4", "#34d399"];
+  const colors = ["#00ffff", "#00d4d4", "#06b6d4", "#f59e0b", "#34d399", "#a855f7"];
   return (
     <div className="confetti-wrap" aria-hidden>
       {Array.from({ length: 36 }).map((_, i) => (
