@@ -2,7 +2,7 @@
   "name": "quickfit",
   "version": "1.0.0",
   "private": true,
-  "description": "ProductCon 2026 demo — the Confidence Line on steroids: market research → hypothesis → prototype → live users, in 30 minutes. QuickFit builds a workout from your time, energy, and equipment.",
+  "description": "ProductCon 2026 demo — The Confidence Line: Build it, Ship it, Learn from it. Market research → hypothesis → prototype → live users, in 30 minutes. QuickFit builds a workout from your time, energy, and equipment.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

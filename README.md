@@ -1,10 +1,10 @@
 # QuickFit — ProductCon 2026 live demo
 
-A complete, rehearsable **"vibe coding on steroids"** demo: take a product from raw
-research all the way to a deployed app that the audience uses live — research →
-hypothesis → prototype → guardrails → ship → real users, in 30 minutes.
+A complete, rehearsable live demo: take a product from raw research all the way to a
+deployed app that the audience uses — research → hypothesis → prototype → guardrails →
+ship → real users, in 30 minutes.
 
-> **The Confidence Line, on steroids.** Speed is now free, so judgment is the job.
+> **The Confidence Line — Build it, Ship it, Learn from it.** Speed is now free, so judgment is the job.
 
 ## What's in here
 
