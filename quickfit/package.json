@@ -1,0 +1,27 @@
+{
+  "name": "quickfit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ProductCon 2026 demo — the Confidence Line on steroids: market research → hypothesis → prototype → live users, in 30 minutes. QuickFit builds a workout from your time, energy, and equipment.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "research": "tsx research/synthesize.ts",
+    "eval": "tsx evals/run.ts"
+  },
+  "dependencies": {
+    "@vercel/kv": "2.0.0",
+    "next": "14.2.5",
+    "qrcode.react": "3.1.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "tsx": "4.16.2",
+    "typescript": "5.5.3"
+  }
+}

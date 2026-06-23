@@ -1,0 +1,42 @@
+[
+  {
+    "id": "int-01",
+    "persona": "Product manager, 34, two kids",
+    "quote": "I actually want to work out. The problem is I get a random 20 minutes and I spend 15 of it scrolling YouTube trying to find something that fits, and then the window's gone. The deciding is what kills me, not the exercise."
+  },
+  {
+    "id": "int-02",
+    "persona": "Consultant, travels weekly",
+    "quote": "Every app assumes I have a gym and an hour. I'm in a hotel room with no equipment and I'm exhausted from flying. None of the plans bend to that. I just want something for the exact situation I'm in right now."
+  },
+  {
+    "id": "int-03",
+    "persona": "Designer, 28",
+    "quote": "I downloaded three fitness apps. They all start with a 10-minute onboarding quiz and a 12-week program. I don't want a program, I want to know what to do in the next 15 minutes. So I close it and do nothing."
+  },
+  {
+    "id": "int-04",
+    "persona": "Nurse, shift worker",
+    "quote": "My energy is completely different depending on the day. Some days I'm wired, some days I'm dead on my feet. A fixed plan that says 'Tuesday is leg day' is useless when Tuesday I can barely stand. I need it to match how I actually feel."
+  },
+  {
+    "id": "int-05",
+    "persona": "Engineer, 41",
+    "quote": "Honestly the hardest rep is the first one — getting started. Once I know exactly what I'm doing I'll do it. It's the blank-page moment, standing in my living room going 'okay… now what,' that makes me quit before I begin."
+  },
+  {
+    "id": "int-06",
+    "persona": "Teacher, 30",
+    "quote": "I have a yoga mat and some dumbbells in the closet. I never know how to combine them into something that makes sense for 15 minutes, so the gear just sits there. Tell me what to do with what I have and I'm in."
+  },
+  {
+    "id": "int-07",
+    "persona": "Founder, 37",
+    "quote": "I don't need motivation, I'm motivated. I need the decision made for me. If something just handed me a workout sized to my time and what's around me, I'd do it on the spot instead of overthinking it."
+  },
+  {
+    "id": "int-08",
+    "persona": "Student, 23",
+    "quote": "I'd use something that takes ten seconds: I type 'ten minutes, no equipment, low energy' and it gives me a workout I can start immediately. Not a subscription, not a coach — just the answer, right now."
+  }
+]

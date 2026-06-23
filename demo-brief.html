@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProductCon 2026 — Demo Brief</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap');
+* { margin:0; padding:0; box-sizing:border-box; }
+:root { --bg:#f3f2ef; --surface:#fff; --ink:#0c0c0d; --muted:#6b6e76; --line:#e4e3df; --accent:#2563eb; --accent-soft:#eaf0ff; }
+body { background:var(--bg); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:860px; margin:0 auto; padding:56px 28px 96px; }
+.kicker { font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:12px; }
+h1 { font-family:'Anton',sans-serif; font-weight:400; text-transform:uppercase; font-size:58px; line-height:0.95; letter-spacing:0.005em; margin-bottom:16px; }
+h1 span { color:var(--accent); }
+.lead { font-size:19px; color:#33353c; max-width:660px; margin-bottom:14px; }
+.note-to { background:var(--accent-soft); border:1px solid #d4e1ff; border-radius:14px; padding:16px 20px; font-size:15px; color:#1e3a8a; margin:24px 0 8px; }
+h2 { font-family:'Anton',sans-serif; font-weight:400; text-transform:uppercase; font-size:24px; letter-spacing:0.01em; margin:44px 0 8px; }
+.sub { font-size:15px; color:var(--muted); margin-bottom:18px; }
+p { font-size:16px; color:#33353c; }
+p + p { margin-top:12px; }
+
+/* flow */
+.flow { list-style:none; counter-reset:f; margin-top:8px; }
+.flow li { position:relative; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 22px 18px 64px; margin-bottom:12px; }
+.flow li::before { counter-increment:f; content:counter(f); position:absolute; left:18px; top:18px; width:30px; height:30px; background:var(--ink); color:#fff; border-radius:50%; font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.flow li.opener::before { content:"0"; background:var(--accent); }
+.flow h3 { font-size:17px; font-weight:700; margin-bottom:3px; }
+.flow p { font-size:14px; color:var(--muted); }
+.flow .t { float:right; font-size:12px; font-weight:700; color:var(--accent); font-family:ui-monospace,monospace; }
+
+/* interactive callout */
+.interactive { display:grid; grid-template-columns:1fr 220px; gap:24px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:26px 28px; margin-top:10px; }
+.interactive h3 { font-size:18px; font-weight:800; margin-bottom:8px; }
+.interactive p { font-size:15px; color:#33353c; }
+.qr { text-align:center; }
+.qr img { width:200px; height:200px; border-radius:12px; border:1px solid var(--line); background:#fff; padding:8px; }
+.qr .cap { font-size:12px; color:var(--muted); margin-top:8px; }
+.qr .cap a { color:var(--accent); text-decoration:none; font-weight:600; }
+
+/* resource cards */
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-top:8px; }
+a.card { display:block; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px; text-decoration:none; color:inherit; transition:transform .1s ease, border-color .15s ease; }
+a.card:hover { transform:translateY(-2px); border-color:var(--accent); }
+.card .ico { font-size:22px; margin-bottom:10px; }
+.card h3 { font-size:16px; font-weight:700; margin-bottom:4px; }
+.card p { font-size:13px; color:var(--muted); }
+.card .url { font-family:ui-monospace,monospace; font-size:12px; color:var(--accent); margin-top:8px; word-break:break-all; }
+
+.takeaway { background:var(--ink); color:#f3f2ef; border-radius:16px; padding:26px 28px; margin-top:34px; }
+.takeaway h2 { color:#fff; margin-top:0; }
+.takeaway p { color:#d7d8db; font-size:16px; }
+.takeaway b { color:#7aa7ff; }
+.foot { margin-top:32px; font-size:13px; color:var(--muted); }
+strong { color:var(--ink); }
+@media(max-width:600px){ h1{font-size:40px;} .interactive{grid-template-columns:1fr;} .qr img{width:180px;height:180px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">ProductCon Online 2026 · Live Demo Brief</div>
+  <h1>The Confidence Line,<br><span>on steroids.</span></h1>
+  <p class="lead">In 30 minutes, live on stage, I take a product from a pile of raw research all the way to a deployed app that the audience uses in real time — research → hypothesis → prototype → guardrails → ship → real users.</p>
+
+  <div class="note-to"><strong>Hi Carlos &amp; the ProductCon team</strong> — here's a quick look at exactly what I'm planning to run on stage, the materials behind it, and the live audience moment. Everything is built and rehearsable. Links to the actual deck, run-through, and working app are below.</div>
+
+  <h2>The idea in one line</h2>
+  <p>Most "AI build" demos start with a finished idea. I start with <strong>nothing</strong> — eight user interviews and a question — and show the audience the real product loop: let AI synthesise the research, turn it into a falsifiable bet, build the tool by describing it, make it genuinely safe with guardrails and an automated test, and ship it to production. Then the room becomes the test. The point isn't that AI is fast — it's that <strong>speed is now free, so judgment is the job.</strong></p>
+
+  <h2>The product I build live: QuickFit</h2>
+  <p>A dead-simple tool where you type what you've actually got right now — your time, energy, and equipment — and get one short workout you can start immediately. No programs, no quizzes, no gym. It's relatable, it's safe to put in front of a crowd, and everyone in the room can try it on their phone.</p>
+
+  <h2>What happens on stage</h2>
+  <p class="sub">A 4-minute framing, then a 30-minute live build in five beats.</p>
+  <ul class="flow">
+    <li class="opener"><span class="t">~4 min</span><h3>Opening — the framing</h3><p>A short, punchy deck: the three real jobs of product, the Confidence Line mental model, and why AI collapses the old build chain. Sets the lens for everything that follows.</p></li>
+    <li><span class="t">0–6:30</span><h3>Research</h3><p>Eight raw interviews on screen. AI synthesises them live into themes and the single biggest pain — in seconds.</p></li>
+    <li><span class="t">6:30–10</span><h3>Hypothesis</h3><p>Turn that pain into a bet I can be wrong about, and name the riskiest assumption out loud: <em>will people actually use it?</em></p></li>
+    <li><span class="t">10–19</span><h3>Prototype</h3><p>Build the working app by describing it to the AI agent in plain English — then test it live on screen.</p></li>
+    <li><span class="t">19–22:30</span><h3>Make it safe</h3><p>Add input/output guardrails plus a medical safety cut-out, and run an automated eval that proves it — green across the board.</p></li>
+    <li><span class="t">22:30–30</span><h3>Ship → real users</h3><p>Deploy to production, put a QR code on screen, and the whole room builds workouts that fill a shared live wall — validating the bet in real time.</p></li>
+  </ul>
+
+  <h2>The live audience moment</h2>
+  <div class="interactive">
+    <div>
+      <h3>The room becomes the test</h3>
+      <p>At the finale, a QR code goes up on the big screen. The audience scans it, builds their own workout in seconds, and every submission appears on a live wall on stage — turning a hypothesis into validated, real-user evidence in front of everyone. <strong>This is the QR they'll scan:</strong></p>
+    </div>
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data=https://quickfit-kappa.vercel.app" alt="QR code to QuickFit">
+      <div class="cap"><a href="https://quickfit-kappa.vercel.app" target="_blank">quickfit-kappa.vercel.app</a></div>
+    </div>
+  </div>
+
+  <h2>The materials</h2>
+  <p class="sub">Everything is ready — feel free to click through.</p>
+  <div class="cards">
+    <a class="card" href="confidence-line-slides.html">
+      <div class="ico">🎤</div>
+      <h3>The opening deck</h3>
+      <p>The 4-minute framing: three jobs, the Confidence Line, old vs. new build loop.</p>
+    </a>
+    <a class="card" href="run-sheet.html">
+      <div class="ico">🎬</div>
+      <h3>The run-through</h3>
+      <p>My full minute-by-minute run sheet — every beat, what I say, and what I build.</p>
+    </a>
+    <a class="card" href="https://quickfit-kappa.vercel.app" target="_blank">
+      <div class="ico">🏃</div>
+      <h3>The live app</h3>
+      <p>QuickFit, deployed and running. Try it — type your time, energy &amp; gear.</p>
+      <div class="url">quickfit-kappa.vercel.app</div>
+    </a>
+  </div>
+
+  <div class="takeaway">
+    <h2>Why it lands</h2>
+    <p>It's a complete, honest product loop — not a magic trick — compressed into one stage and made tangible: the audience doesn't just watch it ship, <b>they're the users who validate it.</b> The takeaway every PM leaves with: AI hands you the speed for free; the judgment is still the job.</p>
+  </div>
+
+  <p class="foot">Happy to walk either of you through it live before the event, or tweak the framing to fit the ProductCon flow. — Thank you!</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Confidence Line — how I think about building with AI</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { font-family: 'Lato', -apple-system, sans-serif; background: #07162C; color: #e8e8f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+section {
+  min-height: 100vh; scroll-snap-align: start; padding: 80px 60px 60px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; position: relative;
+  background: radial-gradient(ellipse at 30% 40%, rgba(59,130,246,0.25) 0%, #07162C 60%);
+  opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease;
+}
+section.visible { opacity: 1; transform: translateY(0); }
+
+.nav-dots { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; z-index: 100; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #333; border: none; cursor: pointer; transition: all 0.3s; position: relative; }
+.nav-dot.active { background: #3b82f6; box-shadow: 0 0 8px rgba(59,130,246,0.5); transform: scale(1.4); }
+.nav-dot:hover { background: rgba(59,130,246,0.7); }
+.nav-dot .tooltip { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: #0c2244; color: #b0b4c8; padding: 4px 10px; border-radius: 6px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; border: 1px solid rgba(59,130,246,0.2); }
+.nav-dot:hover .tooltip { opacity: 1; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 100; background: linear-gradient(90deg, #1241B0, #3b82f6); transition: width 0.3s ease; }
+
+h1, h2 { font-family: 'Poppins', sans-serif; }
+h1 { font-size: 56px; font-weight: 900; color: #fff; line-height: 1.1; }
+h2 { font-size: 40px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+p, li { font-size: 17px; line-height: 1.7; color: #b0b4c8; }
+.subtitle { font-size: 20px; color: #8899bb; margin-top: 8px; margin-bottom: 32px; }
+.section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 3px; color: rgba(255,255,255,0.7); margin-bottom: 12px; font-weight: 700; }
+strong { color: #fff; font-weight: 700; }
+em { color: #60a5fa; font-style: normal; font-weight: 600; }
+code { background: rgba(18,65,176,0.15); padding: 2px 8px; border-radius: 4px; font-size: 14px; color: #60a5fa; font-family: 'IBM Plex Mono', 'SF Mono', monospace; }
+
+.inner { max-width: 940px; width: 100%; text-align: center; }
+.eyebrow { font-size: 13px; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.55); font-weight: 800; margin-bottom: 20px; }
+
+/* ═══ HERO ═══ */
+.hero { align-items: center; text-align: center; }
+.hero h1 { font-size: 68px; margin-bottom: 4px; }
+.hero h1 span { color: #3b82f6; }
+.hero .subtitle { font-size: 22px; max-width: 680px; margin: 16px auto 40px; color: #60a5fa; }
+.hero .scroll-hint { font-size: 13px; color: #555; margin-top: 48px; animation: pulse 2s ease infinite; }
+.hero .scroll-hint span { display: block; margin-top: 8px; font-size: 20px; }
+
+/* ═══ THREE JOBS ═══ */
+.jobs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 30px 0 18px; text-align: left; }
+.job-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 24px; transition: all 0.3s ease; }
+.job-card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.3); }
+.job-num { width: 34px; height: 34px; border-radius: 9px; background: #1241B0; color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; margin-bottom: 14px; }
+.job-title { font-family: 'Poppins', sans-serif; font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.2; }
+.job-what { font-size: 14px; color: #b0b4c8; margin-bottom: 12px; line-height: 1.5; }
+.job-why { font-size: 13px; color: #8899bb; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; }
+.job-why b { color: #60a5fa; font-weight: 700; }
+.foot-line { font-size: 18px; color: #cdd3e3; text-align: center; margin-top: 10px; }
+
+/* ═══ CONFIDENCE LINE (spectrum) ═══ */
+.spectrum { margin: 42px auto 16px; max-width: 740px; }
+.spectrum-track { height: 12px; border-radius: 999px; background: linear-gradient(90deg, rgba(248,113,113,0.75) 0%, #8899bb 50%, #3b82f6 100%); position: relative; }
+.spectrum-track::before, .spectrum-track::after { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; border-radius: 50%; border: 3px solid #07162C; }
+.spectrum-track::before { left: 0; background: #fca5a5; }
+.spectrum-track::after { right: 0; background: #3b82f6; }
+.spectrum-ticks { display: flex; justify-content: space-between; margin-top: 16px; }
+.spectrum-ticks span { font-size: 15px; font-weight: 700; width: 33%; }
+.spectrum-ticks .s-l { text-align: left; color: #fca5a5; }
+.spectrum-ticks .s-m { text-align: center; color: #cdd3e3; }
+.spectrum-ticks .s-r { text-align: right; color: #60a5fa; }
+.dual { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 30px; text-align: left; }
+.dual .d-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px 22px; }
+.dual .d-card .d-key { font-family: 'Poppins', sans-serif; font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+.dual .d-card .d-key.blue { color: #60a5fa; }
+.dual .d-card p { font-size: 14px; color: #8899bb; }
+
+/* ═══ MATURITY SPECTRUM ═══ */
+.cline { margin: 40px auto 12px; max-width: 860px; }
+.cline-ends { display: flex; justify-content: space-between; font-size: 14px; color: #8899bb; font-style: italic; margin-bottom: 14px; padding: 0 4px; }
+.cline-ends .right { color: #60a5fa; font-weight: 700; font-style: normal; }
+.cline-stops { display: flex; justify-content: space-between; position: relative; }
+.cline-stops::before { content: ''; position: absolute; left: 24px; right: 24px; top: 23px; height: 4px; border-radius: 999px; background: linear-gradient(90deg, rgba(136,153,187,0.5), #1241B0 50%, #3b82f6); z-index: 0; }
+.cstop { display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; z-index: 1; width: 19%; }
+.cdot { width: 48px; height: 48px; border-radius: 50%; background: #0c2244; border: 2px solid #3b82f6; color: #fff; font-weight: 800; font-size: 17px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 5px rgba(7,22,44,0.9); }
+.clab { text-align: center; line-height: 1.3; }
+.clab .cname { display: block; font-size: 14px; color: #fff; font-weight: 800; }
+.clab .csub { display: block; font-size: 12px; color: #8899bb; margin-top: 3px; }
+.trap { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.22); border-radius: 12px; padding: 16px 22px; margin-top: 30px; text-align: center; font-size: 17px; color: #e8d6d4; }
+.trap b { color: #fca5a5; font-weight: 800; }
+
+/* ═══ LOOPS (arc flow) ═══ */
+.arc-flow { display: flex; gap: 10px; align-items: stretch; margin: 36px 0 20px; flex-wrap: wrap; justify-content: center; }
+.arc-node { padding: 18px 18px; border-radius: 12px; text-align: center; font-size: 14px; font-weight: 700; color: #fff; min-width: 158px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
+.arc-node:hover { transform: translateY(-3px); }
+.arc-arrow { display: flex; align-items: center; color: #3b82f6; font-size: 22px; font-weight: 800; }
+.loop-old .arc-node { background: rgba(248,113,113,0.10); border-color: rgba(248,113,113,0.30); color: #fecaca; }
+.loop-old .arc-arrow { color: #f87171; }
+.loop-new .arc-node { background: rgba(52,211,153,0.10); border-color: rgba(52,211,153,0.32); color: #d1fae5; }
+.loop-new .arc-node.key { background: rgba(52,211,153,0.22); border-color: #34d399; color: #fff; box-shadow: 0 0 18px rgba(52,211,153,0.28); }
+.loop-new .arc-arrow { color: #34d399; }
+.section-label.red { color: #fca5a5; }
+.section-label.green { color: #6ee7b7; }
+
+/* ═══ CTA ═══ */
+section.cta { padding: 0; }
+section.cta .cta-inner { position: absolute; inset: 0; background: linear-gradient(135deg, #07162C 0%, #0c2244 55%, #1241B0 100%); display: flex; align-items: center; justify-content: center; padding: 40px; }
+.cta-card { border: 1.5px solid rgba(255,255,255,0.16); border-radius: 22px; padding: 52px 60px; max-width: 720px; text-align: center; }
+.cta-card .eyebrow { color: rgba(255,255,255,0.6); }
+.cta-card h2 { font-size: 46px; line-height: 1.08; margin-bottom: 18px; }
+.cta-card h2 span { color: #60a5fa; }
+.cta-card p { font-size: 19px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+.cta-now { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 800; color: #fff; margin-top: 26px; }
+.cta-now span { color: #60a5fa; }
+
+/* ═══ PRESENTER TOOLS ═══ */
+.help-hint { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); font-size: 11px; color: rgba(255,255,255,0.22); z-index: 90; white-space: nowrap; pointer-events: none; }
+.skip-badge { display: none; position: fixed; top: 16px; left: 24px; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #f87171; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); padding: 5px 14px; border-radius: 6px; z-index: 150; cursor: pointer; }
+.skip-badge.visible { display: block; }
+.skip-badge:hover { background: rgba(248,113,113,0.2); }
+.slide-sorter { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(7,22,44,0.97); overflow-y: auto; padding: 60px 40px 40px; }
+.slide-sorter.visible { display: block; }
+.sorter-header { display: flex; justify-content: space-between; align-items: flex-start; max-width: 1200px; margin: 0 auto 32px; padding: 0 8px; }
+.sorter-title { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 800; color: #fff; }
+.sorter-subtitle { font-size: 13px; color: #8899bb; margin-top: 4px; }
+.sorter-close { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: #8899bb; font-size: 18px; cursor: pointer; }
+.sorter-close:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.sorter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; max-width: 1200px; margin: 0 auto; }
+.sorter-item { background: #0c2340; border: 1px solid rgba(59,130,246,0.15); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.15s ease; }
+.sorter-item:hover { border-color: #1241B0; background: #0f2d4a; }
+.sorter-item.sorter-active { border-color: #1241B0; box-shadow: 0 0 12px rgba(18,65,176,0.3); }
+.sorter-item.sorter-skipped { opacity: 0.4; }
+.sorter-num { font-size: 11px; font-weight: 800; color: #1241B0; margin-bottom: 6px; }
+.sorter-label { font-size: 13px; font-weight: 600; color: #e0e0f0; line-height: 1.4; margin-bottom: 10px; min-height: 36px; }
+.sorter-skip-btn { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 4px; border: none; cursor: pointer; }
+.sorter-skip-btn.skip-off { background: rgba(255,255,255,0.06); color: #889; }
+.sorter-skip-btn.skip-off:hover { background: rgba(248,113,113,0.15); color: #fca5a5; }
+.sorter-skip-btn.skip-on { background: rgba(248,113,113,0.15); color: #fca5a5; }
+section.skipped { display: none; }
+
+@keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+@media (max-width: 768px) {
+  section { padding: 48px 24px; }
+  h1, .hero h1 { font-size: 38px; }
+  h2 { font-size: 28px; }
+  .jobs, .dual { grid-template-columns: 1fr; }
+  .nav-dots { display: none; }
+  .cline-stops { flex-wrap: wrap; gap: 18px; justify-content: center; }
+  .cline-stops::before { display: none; }
+  .cstop { width: 40%; }
+  .arc-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- 1: Hero -->
+<section class="hero" data-title="The Confidence Line">
+  <div class="eyebrow">ProductCon 2026 · how I think about building</div>
+  <h1>The Confidence <span>Line</span></h1>
+  <p class="subtitle">How product work really works — and why AI changes who gets to build.</p>
+  <div class="scroll-hint">Scroll to explore<span>&#8595;</span></div>
+</section>
+
+<!-- 2: The Three Jobs -->
+<section data-title="The Three Jobs">
+  <div class="inner">
+    <div class="section-label">What the job actually is</div>
+    <h2>Strip the jargon — there are three jobs</h2>
+    <div class="jobs">
+      <div class="job-card">
+        <div class="job-num">1</div>
+        <div class="job-title">Sit with the problem</div>
+        <div class="job-what">Understand it before you reach for a solution.</div>
+        <div class="job-why"><b>Why:</b> stops you from rebuilding a broken process in a shinier new tool.</div>
+      </div>
+      <div class="job-card">
+        <div class="job-num">2</div>
+        <div class="job-title">Frame the hypothesis</div>
+        <div class="job-what">Outcome, success, constraints — written down.</div>
+        <div class="job-why"><b>Why:</b> turns "we need a better X" into something you can actually test.</div>
+      </div>
+      <div class="job-card">
+        <div class="job-num">3</div>
+        <div class="job-title">Run learning loops</div>
+        <div class="job-what">Build small, evaluate, decide, scale.</div>
+        <div class="job-why"><b>Why:</b> replaces big-bang bets with small, recoverable moves.</div>
+      </div>
+    </div>
+    <p class="foot-line">None of that is "write a PRD" or "own a roadmap." Those are <em>outputs.</em> The three jobs are the <strong>actual work.</strong></p>
+  </div>
+</section>
+
+<!-- 3: The Confidence Line -->
+<section data-title="The Confidence Line">
+  <div class="inner">
+    <div class="section-label">The one mental model</div>
+    <h2>The Confidence Line</h2>
+    <p class="subtitle">Every decision sits somewhere from <em>"we're guessing"</em> to <em>"we know."</em></p>
+    <div class="spectrum">
+      <div class="spectrum-track"></div>
+      <div class="spectrum-ticks">
+        <span class="s-l">We're guessing</span>
+        <span class="s-m">Hypothesis&nbsp;+&nbsp;evidence</span>
+        <span class="s-r">We know</span>
+      </div>
+    </div>
+    <p class="foot-line">The whole job is moving the needle — <strong>cheaply and honestly.</strong></p>
+    <div class="dual">
+      <div class="d-card"><div class="d-key">Cheaply</div><p>Small tests — not three-month projects.</p></div>
+      <div class="d-card"><div class="d-key blue">Honestly</div><p>Real evidence — not vibes or seniority.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4: The Old Loop -->
+<section data-title="The Old Loop">
+  <div class="inner">
+    <div class="section-label red">Pre-AI · the slow way</div>
+    <h2>The old way is a translation chain</h2>
+    <div class="arc-flow loop-old">
+      <div class="arc-node">Business<br>writes wishes</div>
+      <div class="arc-arrow">&rarr;</div>
+      <div class="arc-node">PM<br>translates</div>
+      <div class="arc-arrow">&rarr;</div>
+      <div class="arc-node">Eng<br>builds</div>
+      <div class="arc-arrow">&rarr;</div>
+      <div class="arc-node">Users<br>adopt</div>
+    </div>
+    <p class="foot-line">Something gets lost at <strong>every handoff.</strong> The further you are from the keyboard, the more you wait — and the less the result looks like what you asked for.</p>
+  </div>
+</section>
+
+<!-- 5: The New Loop -->
+<section data-title="The AI Builder Loop">
+  <div class="inner">
+    <div class="section-label green">Post-AI · the fast way</div>
+    <h2>The new way: the AI builder</h2>
+    <div class="arc-flow loop-new">
+      <div class="arc-node key">Person with<br>the problem</div>
+      <div class="arc-arrow">&rarr;</div>
+      <div class="arc-node">Builds<br>WITH AI</div>
+      <div class="arc-arrow">&rarr;</div>
+      <div class="arc-node">Tests<br>it</div>
+      <div class="arc-arrow">&rarr;</div>
+      <div class="arc-node">Docs fall<br>out the end</div>
+    </div>
+    <p class="foot-line">The person <strong>closest to the problem</strong> becomes the builder. The role label doesn't matter — the <em>skill mix</em> does. You bring the judgment; AI handles the scaffolding.</p>
+  </div>
+</section>
+
+<!-- 6: CTA -->
+<section class="cta" data-title="So here's the bet">
+  <div class="cta-inner">
+    <div class="cta-card">
+      <div class="eyebrow">So here's the bet</div>
+      <h2>I'll be that builder.<br><span>Live.</span></h2>
+      <p>Less than an idea — just a pile of research — moved all the way across the Confidence Line: researched, hypothesised, built, made safe, shipped, and validated by real users — <strong>you.</strong> The whole loop, in 30 minutes.</p>
+      <div class="cta-now">Starting the clock… <span>now.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="help-hint">↑ ↓ navigate · K skip section · M section sorter</div>
+<div class="skip-badge" id="skip-badge" title="Click to unskip (K)">SKIPPED</div>
+<div class="slide-sorter" id="slide-sorter">
+  <div class="sorter-header">
+    <div><div class="sorter-title">Section Sorter</div><div class="sorter-subtitle">Click to jump · toggle skip to hide during the talk</div></div>
+    <button class="sorter-close" onclick="closeSorter()" title="Close (M / Esc)">✕</button>
+  </div>
+  <div class="sorter-grid" id="sorter-grid"></div>
+</div>
+
+<script>
+const sections = Array.from(document.querySelectorAll('section'));
+const navDotsContainer = document.getElementById('navDots');
+let currentIdx = 0, sorterVisible = false;
+
+const STORAGE_KEY = 'skip-' + document.title.replace(/[^a-z0-9]/gi, '-').slice(0, 50);
+const skipped = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+const saveSkips = () => localStorage.setItem(STORAGE_KEY, JSON.stringify([...skipped]));
+
+function applySkips() { sections.forEach((s, i) => s.classList.toggle('skipped', skipped.has(i))); rebuildDots(); }
+function rebuildDots() {
+  navDotsContainer.innerHTML = '';
+  sections.forEach((sec, i) => {
+    if (skipped.has(i)) return;
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot';
+    dot.innerHTML = `<span class="tooltip">${sec.dataset.title || 'Section'}</span>`;
+    dot.dataset.idx = i;
+    dot.onclick = () => sec.scrollIntoView({ behavior: 'smooth' });
+    navDotsContainer.appendChild(dot);
+  });
+}
+function activeList() { return sections.map((s, i) => i).filter(i => !skipped.has(i)); }
+function updateProgress(idx) {
+  currentIdx = idx;
+  const active = activeList(), pos = active.indexOf(idx);
+  document.getElementById('progressBar').style.width = (pos >= 0 ? (pos + 1) / active.length * 100 : 0) + '%';
+  navDotsContainer.querySelectorAll('.nav-dot').forEach(d => d.classList.toggle('active', parseInt(d.dataset.idx) === idx));
+  document.getElementById('skip-badge').classList.toggle('visible', skipped.has(idx));
+}
+function toggleSkip(idx) { skipped.has(idx) ? skipped.delete(idx) : skipped.add(idx); saveSkips(); applySkips(); updateProgress(currentIdx); if (sorterVisible) renderSorter(); }
+function nextActive(from, dir) { let i = from + dir; while (i >= 0 && i < sections.length) { if (!skipped.has(i)) return i; i += dir; } return -1; }
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); updateProgress(sections.indexOf(e.target)); } });
+}, { threshold: 0.35 });
+sections.forEach(s => observer.observe(s));
+
+function renderSorter() {
+  const grid = document.getElementById('sorter-grid');
+  grid.innerHTML = '';
+  sections.forEach((sec, i) => {
+    const isSkip = skipped.has(i);
+    const div = document.createElement('div');
+    div.className = 'sorter-item' + (isSkip ? ' sorter-skipped' : '') + (i === currentIdx ? ' sorter-active' : '');
+    div.innerHTML = `<div class="sorter-num">Slide ${i + 1}</div><div class="sorter-label">${sec.dataset.title || 'Section'}</div>
+      <button class="sorter-skip-btn ${isSkip ? 'skip-on' : 'skip-off'}" onclick="event.stopPropagation(); toggleSkip(${i})">${isSkip ? '↩ Unskip' : '⊘ Skip'}</button>`;
+    div.addEventListener('click', () => { sections[i].scrollIntoView({ behavior: 'smooth' }); closeSorter(); });
+    grid.appendChild(div);
+  });
+}
+function openSorter() { sorterVisible = true; renderSorter(); document.getElementById('slide-sorter').classList.add('visible'); }
+function closeSorter() { sorterVisible = false; document.getElementById('slide-sorter').classList.remove('visible'); }
+document.getElementById('skip-badge').addEventListener('click', () => toggleSkip(currentIdx));
+
+document.addEventListener('keydown', (e) => {
+  if (sorterVisible) { if (['Escape', 'm', 'M'].includes(e.key)) { e.preventDefault(); closeSorter(); } return; }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); const n = nextActive(currentIdx, 1); if (n >= 0) sections[n].scrollIntoView({ behavior: 'smooth' }); }
+  else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); const n = nextActive(currentIdx, -1); if (n >= 0) sections[n].scrollIntoView({ behavior: 'smooth' }); }
+  else if (e.key === 'k' || e.key === 'K') toggleSkip(currentIdx);
+  else if (e.key === 'm' || e.key === 'M') openSorter();
+});
+
+applySkips();
+sections[0].classList.add('visible');
+updateProgress(0);
+</script>
+</body>
+</html>
