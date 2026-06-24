@@ -52,3 +52,12 @@ export async function recentWorkouts(limit = 30): Promise<{ items: WallItem[]; t
 
   return { items: MEM.slice(0, limit), total: MEM.length };
 }
+
+export async function clearWall(): Promise<void> {
+  if (hasKV()) {
+    const { kv } = await import("@vercel/kv");
+    await kv.del(KEY);
+    return;
+  }
+  MEM.length = 0;
+}
