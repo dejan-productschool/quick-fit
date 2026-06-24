@@ -145,7 +145,7 @@ td:first-child { font-weight:700; color:var(--ink); }
     <li>Open the <code class="inline">quickfit</code> folder in <b>Cursor or VS Code</b> (you're already in Cursor — just open that folder).</li>
     <li>Open the <b>Claude Code panel</b> in its own tab on the projector (✱ Spark icon → "Open in New Tab"). This is the window the room watches — not a terminal.</li>
     <li>Turn on <b>auto-accept / allow commands</b> in the panel so Claude can run scripts without stopping to ask each time.</li>
-    <li>Dev server already running (just ask Claude "start the app", or run it once before you go on). Two browser tabs ready: <code class="inline">localhost:3000</code> and <code class="inline">localhost:3000/present</code>.</li>
+    <li>Dev server running for the local build demo. Two browser tabs ready: <code class="inline">localhost:3000</code> (for the live build in Beats 3–4) and <code class="inline">https://quick-fit-neon.vercel.app/present</code> (for Beat 5 — <b>must be the production URL, not localhost</b>, so the wall syncs with the audience's phones).</li>
     <li><code class="inline">.env.local</code> has <code class="inline">MOCK_LLM=1</code> (offline-safe). Backup <code class="inline">demo-finished</code> URL open in a hidden tab.</li>
   </ul>
   <div class="note tip"><span class="nl">First time?</span><p>Do the full <b>day-before setup</b> at the bottom of this page (install the editor + Claude Code, <code class="inline">npm install</code>, <code class="inline">vercel link</code>) and rehearse end-to-end in mock mode. Never first-run anything on stage.</p></div>
@@ -414,7 +414,7 @@ my knee is in sharp pain, what should I do
     <div class="step">
       <div class="clock">24:00</div>
       <div class="lines">
-        <div class="line do"><span class="tag do">Do</span><div class="body">Put <code class="inline">quick-fit-neon.vercel.app/present</code> on the big screen (auto QR → the live site + live count + ticker). <i>Open it from the production URL so the wall syncs with the audience's phones.</i></div></div>
+        <div class="line do"><span class="tag do">Do</span><div class="body">Open <code class="inline">https://quick-fit-neon.vercel.app/present</code> in a browser tab and put <b>that</b> on the big screen. <b>Do NOT use localhost/present</b> — the wall only syncs with the audience's phones if you open it from the production URL.</div></div>
         <div class="line say"><span class="tag say">Say</span><div class="body">"There it is — scan that QR code. Phones out, everyone, for real! Type in whatever you've actually got right this second — how much time, how much energy, any gear lying around — and build yourself a workout. Come on, let's light up that wall together."</div></div>
       </div>
     </div>
