@@ -55,26 +55,26 @@ code { background:var(--accent-soft); color:#1d4ed8; padding:2px 6px; border-rad
       <h3>The Run Sheet</h3>
       <p>The only doc you need — rehearse from it, then hold it on stage. Day-before setup, minute-by-minute DO → SAY → ASK, the prompts (P1–P3), transcripts, and fallback, all in one.</p>
     </a>
-    <a class="card" href="http://localhost:3000" target="_blank">
+    <a class="card" href="https://quick-fit-neon.vercel.app" target="_blank">
       <div class="ico">🏃</div>
       <h3>QuickFit</h3>
       <p>The live app — type your time, energy &amp; equipment, get a workout, watch the wall.</p>
-      <div class="url">localhost:3000</div>
+      <div class="url">quick-fit-neon.vercel.app</div>
     </a>
-    <a class="card" href="http://localhost:3000/present" target="_blank">
+    <a class="card" href="https://quick-fit-neon.vercel.app/present" target="_blank">
       <div class="ico">📱</div>
       <h3>Stage screen</h3>
       <p>Big QR code + live count + ticker. Put this on the projector for the finale.</p>
-      <div class="url">localhost:3000/present</div>
+      <div class="url">quick-fit-neon.vercel.app/present</div>
     </a>
   </div>
-  <div class="note">The two app links only work while the dev server is running (see Quick start below). The Frame deck and the Run Sheet work anytime.</div>
+  <div class="note">QuickFit and Stage screen link to the live production app. The Frame deck and Run Sheet work anytime.</div>
 
   <h2>Quick start</h2>
   <ol class="steps">
     <li>Open the <code>quickfit</code> folder in <b>Cursor or VS Code</b> and open the <b>Claude Code panel</b> (✱ → Open in New Tab).</li>
     <li>One-time: install the Claude Code extension + CLI, run <code>npm install</code> in <code>quickfit/</code>, and <code>vercel login</code>.</li>
-    <li>On stage you just <b>talk to Claude</b> — it runs the commands. To test now, ask: <i>"start the app"</i> (or run <code>npm run dev</code>) so the links above work.</li>
+    <li>On stage you just <b>talk to Claude</b> — it runs the commands. The live app is already at <a href="https://quick-fit-neon.vercel.app" target="_blank">quick-fit-neon.vercel.app</a>; run <code>npm run dev</code> locally only for the build demo in Beats 3–4.</li>
     <li>Rehearse in <code>MOCK_LLM=1</code> — research, build, and evals all run offline.</li>
   </ol>
 
