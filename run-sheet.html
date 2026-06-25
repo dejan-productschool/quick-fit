@@ -215,7 +215,7 @@ td:first-child { font-weight:700; color:var(--ink); }
     <div class="step">
       <div class="clock">0:00</div>
       <div class="lines">
-        <div class="line say"><span class="tag say">Say</span><div class="body">"Most AI demos open with a slick, finished idea the presenter clearly built last week. We're not doing that — we're starting with no idea at all, just eight raw interviews asking one question: why does working out just… not happen? Let me read you one."</div></div>
+        <div class="line say"><span class="tag say">Say</span><div class="body">"Most AI demos open with a slick, finished idea. We're not doing that — we're starting with no idea at all, just eight raw interviews asking one question: why does working out just… not happen? Let me read you one."</div></div>
         <div class="line do"><span class="tag do">Do</span><div class="body">Open <code class="inline">research/transcripts.json</code> on screen. Read <b>int-05</b> aloud — "the hardest rep is the first one."</div></div>
         <div class="line say"><span class="tag say">Say</span><div class="body">"Right? 'The hardest rep is the first one.' I heard some version of that in almost every single interview."</div></div>
       </div>
@@ -317,8 +317,10 @@ app/page.tsx (client): a textarea ("e.g. 15 minutes, no equipment, low energy - 
 the workout as a card - title, focus + duration, warm-up, a numbered list of moves
 with their reps/timing, coach note - with a green "guardrails passed" note. Below, a
 "Live wall - built in this room" section that polls /api/feed every 2.5s and lists
-recent { request, title } with a total count. Light, modern styling (off-white
-background, black buttons, blue accent, Anton + Inter fonts).</code></pre></div></div>
+recent { request, title } with a total count. Keep the existing dark theme in
+app/globals.css as-is - near-black background (#111114), electric-cyan accent
+(#00ffff) with a soft glow, light text, Anton + Inter fonts. Do NOT change the
+color scheme or restyle existing elements; only add styles the new UI needs.</code></pre></div></div>
         <div class="line say"><span class="tag say">Say</span><div class="body">"Second prompt builds the part you'll actually see and touch — the interface. A box where you type what you've got, a button, and the workout card that comes back. But the real magic is this last piece: a <b>live wall.</b> Every workout anyone in this room builds pops up on a shared screen, for everyone to see. That's the thing that turns this from a cute little toy into an actual demo — because in a few minutes, that wall is going to be <i>you</i>."</div></div>
       </div>
     </div>
