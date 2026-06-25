@@ -125,7 +125,7 @@ td:first-child { font-weight:700; color:var(--ink); }
 <div class="wrap">
   <div class="kicker">ProductCon Online 2026 · 30-minute live demo</div>
   <h1>The Confidence Line —<br><span>Build it, Ship it,<br>Learn from it.</span></h1>
-  <p class="lead">The one doc you need — rehearse from it, then hold it on stage (keep it on your laptop/phone, never on the projector). <b>DO</b> is your action, <b>SAY</b> is your line to the room, <b>ASK</b> is what you type into the <b>Claude Code panel</b> — Claude runs the real commands for you. Everything runs in <code class="inline">MOCK MODE</code>, so no wifi is needed until the audience step. <b>Day-before setup &amp; the transcripts are at the bottom.</b></p>
+  <p class="lead">The one doc you need — rehearse from it, then hold it on stage (keep it on your laptop/phone, never on the projector). <b>DO</b> is your action, <b>SAY</b> is your line to the room, <b>ASK</b> is what you type into the <b>Claude Code panel</b> — Claude runs the real commands for you. <b>Day-before setup &amp; the transcripts are at the bottom.</b></p>
 
   <!-- RUN OF SHOW -->
   <h2 class="section-h">Run of show (at a glance)</h2>
@@ -146,9 +146,9 @@ td:first-child { font-weight:700; color:var(--ink); }
     <li>Open the <b>Claude Code panel</b> in its own tab on the projector (✱ Spark icon → "Open in New Tab"). This is the window the room watches — not a terminal.</li>
     <li>Turn on <b>auto-accept / allow commands</b> in the panel so Claude can run scripts without stopping to ask each time.</li>
     <li>Dev server running for the local build demo. Two browser tabs ready: <code class="inline">localhost:3000</code> (for the live build in Beats 3–4) and <code class="inline">https://quick-fit-neon.vercel.app/present</code> (for Beat 5 — <b>must be the production URL, not localhost</b>, so the wall syncs with the audience's phones).</li>
-    <li><code class="inline">.env.local</code> has <code class="inline">MOCK_LLM=1</code> (offline-safe). Backup <code class="inline">demo-finished</code> URL open in a hidden tab.</li>
+    <li>Backup <code class="inline">demo-finished</code> URL open in a hidden tab.</li>
   </ul>
-  <div class="note tip"><span class="nl">First time?</span><p>Do the full <b>day-before setup</b> at the bottom of this page (install the editor + Claude Code, <code class="inline">npm install</code>, <code class="inline">vercel link</code>) and rehearse end-to-end in mock mode. Never first-run anything on stage.</p></div>
+  <div class="note tip"><span class="nl">First time?</span><p>Do the full <b>day-before setup</b> at the bottom of this page (install the editor + Claude Code, <code class="inline">npm install</code>, <code class="inline">vercel link</code>) and rehearse end-to-end. Never first-run anything on stage.</p></div>
 
   <!-- OPENING -->
   <div class="beat">
@@ -296,7 +296,7 @@ energy, equipment and target area so the mock workout visibly changes with the i
 Wire app/api/workout/route.ts to read { request }, call complete([system,user],
 {json:true}) with buildWorkoutPrompt(), parse the JSON, and return
 { result, flags, blockedAt, mock }.</code></pre></div></div>
-        <div class="line say"><span class="tag say">Say</span><div class="body">"So what's this first prompt actually doing? Two things. <b>One</b> — it builds the engine: the API and the little 'recipe' the AI follows to turn your time, energy and equipment into one workout you can start right now — and it forces the answer back as clean, structured data, not a wall of text. <b>Two</b> — and this is the sneaky-important bit — it builds in a 'mock mode' so the whole thing runs <i>offline</i>, no API keys, no wifi needed. Which, at a conference… yeah, you'll thank me later. And notice the real move here: that prompt <b>is</b> the product spec. I'm telling it exactly what 'good' looks like — adapt to the constraints, bodyweight by default, always warm up, never play doctor. Quality isn't luck. It's specification."</div></div>
+        <div class="line say"><span class="tag say">Say</span><div class="body">"So what's this prompt actually doing? It builds the engine — the API and the recipe the AI follows to turn your time, energy, and equipment into one workout you can start right now — and it forces the answer back as clean, structured data, not a wall of text. And notice the real move here: that prompt <b>is</b> the product spec. I'm telling it exactly what 'good' looks like — adapt to the constraints, bodyweight by default, always warm up, never play doctor. Quality isn't luck. It's specification."</div></div>
       </div>
     </div>
 
@@ -451,7 +451,7 @@ my knee is in sharp pain, what should I do
     <tr><td>Port 3000 busy / wrong port</td><td>Ask Claude to "kill whatever is on port 3000 and restart the app"</td></tr>
     <tr><td>Agent writes broken code</td><td>Ask Claude to "revert to the demo-finished branch" — "I baked one earlier" — and narrate it</td></tr>
     <tr><td>Deploy fails</td><td>Switch the projector to the pre-deployed <code class="inline">demo-finished</code> URL + its <code class="inline">/present</code></td></tr>
-    <tr><td>Wifi dies mid-research</td><td>You're in <code class="inline">MOCK_LLM=1</code> — research, build, and evals all run offline. Keep going.</td></tr>
+    <tr><td>OpenAI goes down</td><td>Set <code class="inline">MOCK_LLM=1</code> in Vercel env vars and redeploy — research, build, and evals all run offline. Keep going.</td></tr>
   </table>
   <div class="note warn"><span class="nl">Running long? (the #1 risk)</span><p>Beat 3: skip the second sample workout. Beat 4: show only the injury block, then the eval. <b>Never cut</b> the research synthesis (Beat 1) or the QR audience moment (Beat 5) — those two <i>are</i> the demo.</p></div>
 
